@@ -1,7 +1,7 @@
 # NiceTrayIcon
 A JavaFX 11 TrayIcon with the AWT SystemTray but uses the JavaFx ContextMenu and MenuItems, so you can use CSS styles.
 
-#Usage
+# Usage
 ```java
 
     private static NiceTryIcon icon;
