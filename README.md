@@ -1,0 +1,2 @@
+# NiceTRayIcon
+A JavaFX TrayIcon
