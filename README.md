@@ -18,6 +18,7 @@ A JavaFX TrayIcon that uses the AWT SystemTray but usees the JavaFx ContextMenu 
             MenuItem m2 = new MenuItem("Option 2 right here");
             m2.setOnAction(event -> {
                  System.out.println("Exit all");
+                 Platform.exit();
             });
 
             contextMenu.getItems().addAll(m1, m2);
