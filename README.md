@@ -1,5 +1,5 @@
 # NiceTRayIcon
-A JavaFX TrayIcon that with the AWT SystemTray but uses the JavaFx ContextMenu and MenuItem, so you can use CSS to styles.
+A JavaFX TrayIcon with the AWT SystemTray but uses the JavaFx ContextMenu and MenuItems, so you can use CSS styles.
 
 #Usage
 ```java
@@ -7,9 +7,11 @@ A JavaFX TrayIcon that with the AWT SystemTray but uses the JavaFx ContextMenu a
     private static NiceTryIcon icon;
 
     public void start(Stage stage) throws AWTException {
+    //Check if Supported
         if (SystemTray.isSupported()) {
+            //Creating the JavaFX ContextMenu
             ContextMenu contextMenu = new ContextMenu();
-            //Add some MenuItems
+            //Add some JavaFX MenuItems
             MenuItem m1 = new MenuItem("Option 1 right here");
             m1.setOnAction(event -> {
                 System.out.println("This is Option 1");
@@ -20,12 +22,13 @@ A JavaFX TrayIcon that with the AWT SystemTray but uses the JavaFx ContextMenu a
                  System.out.println("Exit all");
                  Platform.exit();
             });
-
+            //Add Menutims to the ContextMenu    
             contextMenu.getItems().addAll(m1, m2);
+            //Create the AWT Image fot the NiceTrayIcon
             Image icon = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/img/ic.png"));
-
+            //Initializing the NiceTrayIcon
             icon = new NiceTryIcon(icon, contextMenu);
-            //Add the TrayIcon to the System Tray if Supported
+            //Add the NiceTrayIcon to the System Tray 
             SystemTray.getSystemTray().add(icon);        
         }        
     }
