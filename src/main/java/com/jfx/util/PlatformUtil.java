@@ -1,8 +1,5 @@
 package com.jfx.util;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author XDSSWAR
@@ -38,7 +35,5 @@ public final class PlatformUtil {
         String os=System.getProperty("os.name").toLowerCase();
         return os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0;
     }
-
-
 
 }

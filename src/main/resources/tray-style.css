@@ -1,0 +1,39 @@
+.tray-context{
+    -fx-background-color: rgba(235, 235, 236, 0.9);
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+    -fx-min-width: 140;
+    -fx-padding: 0;
+}
+
+.tray-context-menu-item > .graphic-container{
+    -fx-padding: 0;
+}
+
+.tray-context-menu-item .label{
+    -fx-text-fill: #212529;
+    -fx-padding: 4 15 4 15;
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 13;
+}
+.tray-context-menu-item:hover .label , .tray-context-menu-item:focused .label{
+    -fx-text-fill: #212529;
+}
+.tray-context-menu-item:hover,.tray-context-menu-item:focused{
+    -fx-background-color: rgba(0, 0, 0, 0.12);
+    -fx-cursor: hand;
+}
+
+.tray-context-menu-item-first{
+    -fx-border-radius: 5 5 0 0;
+    -fx-background-radius: 5 5 0 0;
+}
+.tray-context-menu-item-last{
+    -fx-border-radius: 0 0 5 5;
+    -fx-background-radius: 0 0 5 5;
+}
+.tray-context .separator:horizontal .line{
+    -fx-border-color: rgba(33, 37, 41, 0.6);
+    -fx-border-width: 0.5;
+    -fx-padding: 0;
+}
