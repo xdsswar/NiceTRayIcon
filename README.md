@@ -3,6 +3,8 @@ A JavaFX 11 NiceTrayIcon with the AWT SystemTray but uses the JavaFx ContextMenu
 
 ![NiceTrayIcon](https://github.com/xdsswar/NiceTRayIcon/blob/main/tray.png)
 
+If you have any suggestions let me know. Also, if you can give it a try in MacOS and give me some feedback, it will be amazing since I don't own a mac pc.
+
 # Usage
 ```java
 
