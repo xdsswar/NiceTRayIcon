@@ -1,4 +1,7 @@
 .tray-context{
+    /* Removes shadow boundaries around JavaFX ContextMenu. */
+    -fx-effect: null;
+    -fx-margin: 0;
     -fx-background-color: rgba(235, 235, 236, 0.9);
     -fx-border-radius: 5 5 5 5;
     -fx-background-radius: 5 5 5 5;

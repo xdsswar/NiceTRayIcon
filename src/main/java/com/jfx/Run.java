@@ -1,6 +1,6 @@
 package com.jfx;
 
-import com.jfx.ui.notify.NiceTryIcon;
+import com.jfx.ui.notify.NiceTrayIcon;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.ContextMenu;
@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class Run extends Application {
 
-    private static NiceTryIcon icon;//NiceTrayIcon
+    private static NiceTrayIcon icon;//NiceTrayIcon
 
     /**
      * Create few JavaFx Images to use with the MenuItems Later
@@ -95,7 +95,7 @@ public class Run extends Application {
             //Create the AWT image we gonna use for the Tray Icon
             Image ic = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/img/ic.png"));
             //Initialize the NiceTrayIcon we declared before
-            icon = new NiceTryIcon(ic, m);
+            icon = new NiceTrayIcon(ic, m);
             //Set the NiceTrayIcon to the System Tray
             SystemTray.getSystemTray().add(icon);
         }
