@@ -1,9 +1,9 @@
 # NiceTrayIcon
 A JavaFX 11 NiceTrayIcon with the AWT SystemTray but uses the JavaFx ContextMenu and MenuItems, so you can use CSS styles.
 
-![NiceTrayIcon](https://github.com/xdsswar/NiceTRayIcon/blob/main/tray.png)
+![NiceTrayIcon](/tray.png)
 
-![NiceTrayIcon Hover](https://github.com/xdsswar/NiceTRayIcon/blob/main/tray-hover.png)
+![NiceTrayIcon Hover](/tray-hover.png)
 
 If you have any suggestions let me know. Also, if you can give it a try in MacOS and give me some feedback, it will be amazing since I don't own a mac pc.
 
