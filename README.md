@@ -7,14 +7,14 @@ icon and associate a context menu that appears when the user interacts with the 
 
 Still need some fixes, so try it, and let me know to improve. Enjoy!
 
-Windows 10
+Windows 10, jfx-tray version 1.0.0
 
 ![NiceTrayIcon](/tray.png)
 
 ![NiceTrayIcon Hover](/tray-hover.png)
 
 
-Windows 11
+Windows 11, jfx-tray version 1.0.1
 
 ![NiceTrayIcon Hover](/tray-w11.png)
 
