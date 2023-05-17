@@ -19,6 +19,9 @@ Windows 11, jfx-tray version 1.0.1
 ![NiceTrayIcon Hover](/tray-w11.png)
 
 
+### Not tested on linux, and it's not working on Mac yet 
+
+
 ## Features
 
 - Create a system tray icon with a custom image.
