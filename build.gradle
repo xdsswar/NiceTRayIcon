@@ -4,9 +4,12 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
-group 'com.jfx'
+group 'xss.it.tray'
 version '1.0.1'
-mainClassName="com.jfx.Run"
+
+application{
+    mainClass= 'com.test.TestClass'
+}
 
 repositories {
     mavenCentral()
@@ -40,4 +43,5 @@ jar{
             )
         }
     }
+    exclude('com/test/**')
 }
