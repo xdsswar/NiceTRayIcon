@@ -1,107 +1,138 @@
 # NiceTrayIcon
-A JavaFX 11 NiceTrayIcon with the AWT SystemTray but uses the JavaFx ContextMenu and MenuItems, so you can use CSS styles.
+Library name : jfx-tray 1.0.1
+
+NiceTrayIcon is a utility class that provides a convenient way to create and manage a system tray icon
+with a context menu in JavaFX applications. It allows you to display a custom image as the tray 
+icon and associate a context menu that appears when the user interacts with the icon.
+
+Still need some fixes, so try it, and let me know to improve. Enjoy!
+
+Windows 10
 
 ![NiceTrayIcon](/tray.png)
 
 ![NiceTrayIcon Hover](/tray-hover.png)
 
-If you have any suggestions let me know. Also, if you can give it a try in MacOS and give me some feedback, it will be amazing since I don't own a mac pc.
 
-# Usage
-```java
-public class Main extends Application {
-    private static NiceTryIcon icon;//NiceTrayIcon
+Windows 11
 
-    /**
-     * Create few JavaFx Images to use with the MenuItems Later
-     */
-    private static final javafx.scene.image.Image about = new javafx.scene.image.Image(
-            Objects.requireNonNull(Run.class.getResource("/img/about.png")).toExternalForm());
+![NiceTrayIcon Hover](/tray-w11.png)
 
-    private static final javafx.scene.image.Image help = new javafx.scene.image.Image(
-            Objects.requireNonNull(Run.class.getResource("/img/help.png")).toExternalForm());
 
-    private static final javafx.scene.image.Image link = new javafx.scene.image.Image(
-            Objects.requireNonNull(Run.class.getResource("/img/link.png")).toExternalForm());
+## Features
 
-    private static final javafx.scene.image.Image skip = new javafx.scene.image.Image(
-            Objects.requireNonNull(Run.class.getResource("/img/skip.png")).toExternalForm());
+- Create a system tray icon with a custom image.
+- Associate a context menu with the tray icon.
+- Handle actions and events triggered by the tray icon or context menu.
+- Support for adding and removing style sheets to customize the appearance.
 
-    private static final javafx.scene.image.Image settings = new javafx.scene.image.Image(
-            Objects.requireNonNull(Run.class.getResource("/img/settings.png")).toExternalForm());
+## Usage
 
-    private static final javafx.scene.image.Image exit = new javafx.scene.image.Image(
-            Objects.requireNonNull(Run.class.getResource("/img/exit.png")).toExternalForm());
+1. Include the `NiceTrayIcon` class in your JavaFX project.
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        //Check if System Tray is Supported
-        if (SystemTray.isSupported()) {
-            //Create JavaFX ContextMenu
-            ContextMenu m = new ContextMenu();
-
-            //Create Few JavaFX MenuItems
-            MenuItem m1 = new MenuItem("About");
-            m1.setOnAction(event -> {
-                System.out.println("About");
-            });
-
-            MenuItem m2 = new MenuItem("Help");
-            m2.setOnAction(event -> {
-                System.out.println("Help");
-            });
-
-            MenuItem m3 = new MenuItem("Open Link");
-            m3.setOnAction(event -> {
-                System.out.println("Open Link");
-            });
-
-            MenuItem m4 = new MenuItem("Skip Next");
-            m4.setOnAction(event -> {
-                System.out.println("Skip Next");
-            });
-
-            MenuItem m5 = new MenuItem("Settings");
-            m5.setOnAction(event -> {
-                System.out.println("Settings");
-            });
-
-            MenuItem m6 = new MenuItem("Exit");
-            m6.setOnAction(event -> {
-                System.out.println("Exit");
-                Platform.exit();
-            });
-
-            //Set the JavaFX MenuItems Graphics using the JavaFx Images we created before
-            m1.setGraphic(new ImageView(about));
-            m2.setGraphic(new ImageView(help));
-            m3.setGraphic(new ImageView(link));
-            m4.setGraphic(new ImageView(skip));
-            m5.setGraphic(new ImageView(settings));
-            m6.setGraphic(new ImageView(exit));
-
-            //Add 2 separators
-            SeparatorMenuItem sp = new SeparatorMenuItem();
-            SeparatorMenuItem sp1 = new SeparatorMenuItem();
-            //Add the JavaFX MenuItems/Separators to the ContextMenu
-            m.getItems().addAll(m1, m2, sp, m3, m4, m5, sp1, m6);
-            //Create the AWT image we gonna use for the Tray Icon
-            Image ic = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/img/ic.png"));
-            //Initialize the NiceTrayIcon we declared before
-            icon = new NiceTryIcon(ic, m);
-            //Set the NiceTrayIcon to the System Tray
-            SystemTray.getSystemTray().add(icon);
-        }
-
-    }
-
-    //Remove the TrayIcon before Exiting
-    public void stop() {
-        if (SystemTray.isSupported()) {
-            SystemTray.getSystemTray().remove(icon);
-        }
-    }
-
-}
+2. Create an instance of `NiceTrayIcon` by providing the tray icon image:
 
 ```
+    NiceTrayIcon trayIcon = new NiceTrayIcon(new Image("path/to/icon.png"));
+    MenuItem aboutMenuItem = new MenuItem("About");
+    MenuItem helpMenuItem = new MenuItem("Help");
+    //Add more menu items as neede
+    ContextMenu contextMenu = new ContextMenu(aboutMenuItem, helpMenuItem)
+    trayIcon.setContextMenu(contextMenu);
+```
+
+3. (Optional) Create a ContextMenu and add menu items:
+
+```
+    MenuItem aboutMenuItem = new MenuItem("About");
+    MenuItem helpMenuItem = new MenuItem("Help");
+    // Add more menu items as needed
+    ContextMenu contextMenu = new ContextMenu(aboutMenuItem, helpMenuItem);
+    trayIcon.setContextMenu(contextMenu);
+```
+
+4. (Optional) Set an action handler for the tray icon or menu items:
+
+```
+    trayIcon.setOnAction(event -> {
+        // Handle tray icon action event
+    });
+    
+    aboutMenuItem.setOnAction(event -> {
+        // Handle "About" menu item action
+    });
+    
+    helpMenuItem.setOnAction(event -> {
+        // Handle "Help" menu item action
+    });
+
+```
+
+5. Install the tray icon to the system tray:
+
+```
+    trayIcon.install();
+```
+
+
+6. (Optional) Add or remove style sheets to customize the appearance:
+
+```
+    trayIcon.addStyleSheet("path/to/styles.css");      // Add style sheet
+    trayIcon.removeStyleSheet("path/to/styles.css");   // Remove style sheet
+```
+
+7. Uninstall the tray icon before exiting the application:
+
+```
+    trayIcon.uninstall();
+```
+
+# Example:
+Here's an example of using NiceTrayIcon in a JavaFX application:
+
+
+```java
+public class Main extends Application{
+
+        private static NiceTrayIcon trayIcon;
+
+        // Create images for menu items
+        private static final Image about = new Image("path/to/about.png");
+        private static final Image help = new Image("path/to/help.png");
+        // Add more images for other menu items
+
+        @Override
+        public void start(Stage stage) {
+            // Create menu items with images
+            MenuItem aboutMenuItem = new MenuItem("About", new ImageView(about));
+            MenuItem helpMenuItem = new MenuItem("Help", new ImageView(help));
+            // Add more menu items as needed
+
+            ContextMenu contextMenu = new ContextMenu(aboutMenuItem, helpMenuItem);
+
+            trayIcon = new NiceTrayIcon(new Image("path/to/icon.png"));
+            trayIcon.setContextMenu(contextMenu);
+
+            trayIcon.setOnAction(event -> {
+                // Handle tray icon action event
+            });
+
+            trayIcon.install();
+        }
+
+        @Override
+        public void stop() {
+            trayIcon.uninstall();
+        }
+
+        public static void main(String[] args) {
+            launch(args);
+        }
+}
+```
+
+
+
+In this updated version, the MIT license information has been added
+at the end of the README, along with a link to the `LICENSE` file for more details.
