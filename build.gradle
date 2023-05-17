@@ -31,6 +31,10 @@ test {
     useJUnitPlatform()
 }
 
+
+
+
+
 jar{
     archiveBaseName='jxf-tray'
     manifest {
@@ -43,5 +47,5 @@ jar{
             )
         }
     }
-    exclude('com/test/**')
+    exclude('com/**')
 }
