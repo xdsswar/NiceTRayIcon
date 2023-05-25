@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import xss.it.Assets;
 import xss.it.tray.NiceTrayIcon;
+import xss.it.util.TaskBar;
 
 /**
  * @author XDSSWAR
@@ -31,6 +32,7 @@ public class TestClass extends Application {
 
         item.setOnAction(event -> {
             stage.show();
+            System.out.println(TaskBar.getPosition());
         });
 
         trayIcon.setOnAction(event -> {
@@ -46,6 +48,11 @@ public class TestClass extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void init(){
+        System.out.println(TaskBar.getPosition());
     }
 
     @Override
