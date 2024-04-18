@@ -1,7 +1,21 @@
-package xss.it.util;
+/*
+ * Copyright © 2024. XTREME SOFTWARE SOLUTIONS
+ *
+ * All rights reserved. Unauthorized use, reproduction, or distribution
+ * of this software or any portion of it is strictly prohibited and may
+ * result in severe civil and criminal penalties. This code is the sole
+ * proprietary of XTREME SOFTWARE SOLUTIONS.
+ *
+ * Commercialization, redistribution, and use without explicit permission
+ * from XTREME SOFTWARE SOLUTIONS, are expressly forbidden.
+ */
+
+package com.sun.it.tray;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.*;
+import javafx.scene.image.PixelFormat;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritablePixelFormat;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
@@ -12,74 +26,10 @@ import java.awt.image.SinglePixelPackedSampleModel;
 import java.nio.IntBuffer;
 
 /**
- *
  * @author XDSSWAR
- * Created on 05/16/2023
- * Utility class for working with JavaFX images and AWT BufferedImages.
+ * Created on 04/18/2024
  */
-@SuppressWarnings("all")
-public final class PortableImageUtils {
-    /**
-     * Converts a BufferedImage to a WritableImage.
-     *
-     * @param bimg The BufferedImage to convert.
-     * @param wimg The existing WritableImage, if any.
-     * @return The converted WritableImage.
-     */
-    public static WritableImage convertToFxImage(BufferedImage bimg, WritableImage wimg) {
-        int bw = bimg.getWidth();
-        int bh = bimg.getHeight();
-        switch (bimg.getType()) {
-            case BufferedImage.TYPE_INT_ARGB:
-            case BufferedImage.TYPE_INT_ARGB_PRE:
-                break;
-            default:
-                BufferedImage converted =
-                        new BufferedImage(bw, bh, BufferedImage.TYPE_INT_ARGB_PRE);
-                Graphics2D g2d = converted.createGraphics();
-                g2d.drawImage(bimg, 0, 0, null);
-                g2d.dispose();
-                bimg = converted;
-                break;
-        }
-        // Check the existing WritableImage, if provided
-        if (wimg != null) {
-            int iw = (int) wimg.getWidth();
-            int ih = (int) wimg.getHeight();
-            if (iw < bw || ih < bh) {
-                wimg = null;
-            } else if (bw < iw || bh < ih) {
-                int[] empty = new int[iw];
-                PixelWriter pw = wimg.getPixelWriter();
-                PixelFormat<IntBuffer> pf = PixelFormat.getIntArgbPreInstance();
-                if (bw < iw) {
-                    pw.setPixels(bw, 0, iw-bw, bh, pf, empty, 0, 0);
-                }
-                if (bh < ih) {
-                    pw.setPixels(0, bh, iw, ih-bh, pf, empty, 0, 0);
-                }
-            }
-        }
-        // Create a new WritableImage if needed
-        if (wimg == null) {
-            wimg = new WritableImage(bw, bh);
-        }
-        PixelWriter pw = wimg.getPixelWriter();
-        DataBufferInt db = getBufferInt(bimg);
-        int[] data = db.getData();
-        int offset = bimg.getRaster().getDataBuffer().getOffset();
-        int scan =  0;
-        SampleModel sm = bimg.getRaster().getSampleModel();
-        if (sm instanceof SinglePixelPackedSampleModel) {
-            scan = ((SinglePixelPackedSampleModel)sm).getScanlineStride();
-        }
-
-        PixelFormat<IntBuffer> pf = (bimg.isAlphaPremultiplied() ?
-                PixelFormat.getIntArgbPreInstance() :
-                PixelFormat.getIntArgbInstance());
-        pw.setPixels(0, 0, bw, bh, pf, data, offset, scan);
-        return wimg;
-    }
+public final class ImageUtils {
 
     /**
      * Converts a JavaFX Image to an AWT BufferedImage.
@@ -88,7 +38,7 @@ public final class PortableImageUtils {
      * @param bimg BufferedImage to be used as the destination image, or null to create a new BufferedImage
      * @return AWT BufferedImage equivalent of the input image
      */
-    public static BufferedImage convertToAwtImage(Image img, BufferedImage bimg) {
+    public static BufferedImage toAwt(Image img, BufferedImage bimg) {
         PixelReader pr = img.getPixelReader();
         if (pr == null) {
             return null;
@@ -139,6 +89,32 @@ public final class PortableImageUtils {
         return bimg;
     }
 
+
+    /**
+     * Returns the associated WritablePixelFormat for the given BufferedImage type.
+     *
+     * @param bimg The BufferedImage.
+     * @return The associated WritablePixelFormat.
+     * @throws InternalError if the BufferedImage type is not recognized.
+     */
+    private static WritablePixelFormat<IntBuffer> getAssociatedPixelFormat(BufferedImage bimg){
+        return switch (bimg.getType()) {
+            case BufferedImage.TYPE_INT_RGB, BufferedImage.TYPE_INT_ARGB_PRE -> PixelFormat.getIntArgbPreInstance();
+            case BufferedImage.TYPE_INT_ARGB -> PixelFormat.getIntArgbInstance();
+            default ->throw new InternalError("Failed to validate BufferedImage type");
+        };
+    }
+
+    /**
+     * Retrieves the DataBufferInt from a BufferedImage.
+     *
+     * @param image The BufferedImage to retrieve the DataBufferInt from.
+     * @return The DataBufferInt of the BufferedImage.
+     */
+    private static DataBufferInt getBufferInt(BufferedImage image){
+        return (DataBufferInt)image.getRaster().getDataBuffer();
+    }
+
     /**
      * Determines the best BufferedImage type based on the given PixelFormat, an existing
      * BufferedImage, and whether the source pixels are opaque.
@@ -148,7 +124,7 @@ public final class PortableImageUtils {
      * @param isOpaque   Flag indicating if the source pixels are opaque.
      * @return The best BufferedImage type.
      */
-    static int getBestBufferedImageType(PixelFormat<?> fxFormat, BufferedImage bimg, boolean isOpaque) {
+    private static int getBestBufferedImageType(PixelFormat<?> fxFormat, BufferedImage bimg, boolean isOpaque) {
         if (bimg != null) {
             int bimgType = bimg.getType();
             if (bimgType == BufferedImage.TYPE_INT_ARGB ||
@@ -171,21 +147,6 @@ public final class PortableImageUtils {
     }
 
     /**
-     * Returns the associated WritablePixelFormat for the given BufferedImage type.
-     *
-     * @param bimg The BufferedImage.
-     * @return The associated WritablePixelFormat.
-     * @throws InternalError if the BufferedImage type is not recognized.
-     */
-    private static WritablePixelFormat<IntBuffer> getAssociatedPixelFormat(BufferedImage bimg){
-        return switch (bimg.getType()) {
-            case BufferedImage.TYPE_INT_RGB, BufferedImage.TYPE_INT_ARGB_PRE -> PixelFormat.getIntArgbPreInstance();
-            case BufferedImage.TYPE_INT_ARGB -> PixelFormat.getIntArgbInstance();
-            default ->throw new InternalError("Failed to validate BufferedImage type");
-        };
-    }
-
-    /**
      * Checks if the given JavaFX image is fully opaque.
      *
      * @param pr The PixelReader to read the image pixels.
@@ -204,16 +165,4 @@ public final class PortableImageUtils {
         }
         return true;
     }
-
-
-    /**
-     * Retrieves the DataBufferInt from a BufferedImage.
-     *
-     * @param image The BufferedImage to retrieve the DataBufferInt from.
-     * @return The DataBufferInt of the BufferedImage.
-     */
-    private static DataBufferInt getBufferInt(BufferedImage image){
-        return (DataBufferInt)image.getRaster().getDataBuffer();
-    }
-
 }

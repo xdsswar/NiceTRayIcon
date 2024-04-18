@@ -1,7 +1,16 @@
-package xss.it.tray.internal;
+/*
+ * Copyright © 2024. XTREME SOFTWARE SOLUTIONS
+ *
+ * All rights reserved. Unauthorized use, reproduction, or distribution
+ * of this software or any portion of it is strictly prohibited and may
+ * result in severe civil and criminal penalties. This code is the sole
+ * proprietary of XTREME SOFTWARE SOLUTIONS.
+ *
+ * Commercialization, redistribution, and use without explicit permission
+ * from XTREME SOFTWARE SOLUTIONS, are expressly forbidden.
+ */
 
-import xss.it.tray.TrayActionEvent;
-import xss.it.tray.TrayEvent;
+package com.sun.it.tray;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +19,9 @@ import java.awt.event.MouseEvent;
 
 /**
  * @author XDSSWAR
- * Created on 05/16/2023
- * Custom tray icon class that extends TrayIcon.
- * Provides an additional ContextMenu property.
+ * Created on 04/18/2024
  */
-public class NiceIcon extends TrayIcon {
+public final class NiceIcon extends TrayIcon {
 
     /**
      * Constructs a NiceIcon with the specified image.
@@ -30,7 +37,7 @@ public class NiceIcon extends TrayIcon {
      * @param event The event handler to set.
      */
     public void setOnAction(TrayActionEvent event){
-        addMouseListener(new MouseAdapter() {
+        SwingUtilities.invokeLater(()-> addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 TrayEvent trayEvent =new TrayEvent(
@@ -41,8 +48,7 @@ public class NiceIcon extends TrayIcon {
                         e.getY());
                 event.event(trayEvent);
             }
-        });
-
+        }));
     }
 
     /**
@@ -74,5 +80,4 @@ public class NiceIcon extends TrayIcon {
             }
         });
     }
-
 }

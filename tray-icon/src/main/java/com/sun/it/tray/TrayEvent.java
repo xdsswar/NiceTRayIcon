@@ -1,12 +1,22 @@
-package xss.it.tray;
+/*
+ * Copyright © 2024. XTREME SOFTWARE SOLUTIONS
+ *
+ * All rights reserved. Unauthorized use, reproduction, or distribution
+ * of this software or any portion of it is strictly prohibited and may
+ * result in severe civil and criminal penalties. This code is the sole
+ * proprietary of XTREME SOFTWARE SOLUTIONS.
+ *
+ * Commercialization, redistribution, and use without explicit permission
+ * from XTREME SOFTWARE SOLUTIONS, are expressly forbidden.
+ */
+
+package com.sun.it.tray;
 
 import java.util.Objects;
 
 /**
  * @author XDSSWAR
- * Created on 05/17/2023
- * The Linker class represents a mouse click event with additional information such as the mouse button clicked,
- * whether it was a double click event, and the coordinates of the mouse click.
+ * Created on 04/18/2024
  */
 public class TrayEvent {
     private final boolean rightClick;

@@ -1,51 +1,18 @@
 plugins {
     id 'java'
-    id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
-group 'xss.it.tray'
-version '1.0.1'
+group 'xss.it'
 
-application{
-    mainClass= 'com.test.TestClass'
+allprojects {
+    version = '1.0.0'
 }
 
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    implementation 'org.jetbrains:annotations:24.0.0'
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation project(path: ':')
-}
-
-javafx {
-    version = "17.0.2"
-    modules = ['javafx.controls','javafx.fxml', 'javafx.media','javafx.graphics' , 'javafx.base']
-}
-
-test {
-    useJUnitPlatform()
-}
-
-
-
-
-
-jar{
-    archiveBaseName='jxf-tray'
-    manifest {
-        manifest {
-            attributes(
-                    'name' : 'jfx-tray',
-                    'version': version,
-                    'description': 'Library to create javafx tray icons with context menu.',
-                    'author': 'Xtreme Software Solutions (XSS&IT)'
-            )
-        }
-    }
-    exclude('com/**')
 }
