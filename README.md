@@ -82,5 +82,3 @@ public class Main {
 ## Screenshots
 
 1. ![Tray Icon Example](screenshots/1.png)
-
-Replace the `path/to/your/...` placeholders with actual paths to your project resources and screenshots.

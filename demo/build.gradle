@@ -12,6 +12,7 @@ repositories {
 
 application {
     mainClass ='xss.it.demo.Demo'
+    mainModule = 'demo'
 }
 
 
